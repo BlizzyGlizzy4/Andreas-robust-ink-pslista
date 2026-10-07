@@ -81,7 +81,13 @@ class ShoppingList
     // Reads the file back into the list.
     public void Load()
     {
-        string[] lines = File.ReadAllLines(path);
+       if (!File.Exists(path))
+        {
+            Console.WriteLine("Hittade ingen sparad lista. d");
+            return;
+        }    
+    
+    string[] lines = File.ReadAllLines(path);
 
         foreach (string line in lines)
         {
