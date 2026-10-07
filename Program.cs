@@ -41,7 +41,14 @@ while (true)
             continue;
         }
 
-        list.RemoveAt(number);
+         if (list.RemoveAt(number))
+        {
+            Console.WriteLine("Varan är borttagen.");
+        }
+        else
+        {
+            Console.WriteLine("Det finns ingen vara med nummer " + number + ".");
+        }
     }
     else if (choice == 3)
     {
