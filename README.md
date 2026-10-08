@@ -16,3 +16,9 @@ RemoveAt kollade inte om numret fanns i listan, vilket gav ett ArgumentOutOfRang
 
 ### Femte felet. Totalsumman är fel
 Programmet visade 121 kr i stället för 136 kr. Loopen i Total() började på i = 1, så den första varan räknades aldrig med. Jag ändrade till i = 0.
+
+### Sjätte felet. Sparandet döljer fel
+Det här felet hittade jag genom att läsa koden. Save() hade en tom catch och skrev alltid "Listan är sparad", även om sparandet misslyckades. Jag flyttade meddelandet in i try och ersatte den tomma catch med två som fångar IOException och UnauthorizedAccessException och skriver ut vad som gick fel.
+
+## Så testade jag
+Jag skrev bokstäver och tomma svar i menyn, priset och numret, tog bort varor som inte fanns, döpte om items.txt, sparade och startade om, sökte efter varor i listan och räknade totalsumman för hand.
