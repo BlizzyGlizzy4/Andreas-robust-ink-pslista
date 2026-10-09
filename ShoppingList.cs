@@ -2,16 +2,30 @@
 class ShoppingList
 {
     private List<Item> items = new List<Item>();
-    private string path;
+   private string path;
 
-    public ShoppingList(string path)
+    // The most the whole list may cost, in kronor.
+    public int Budget { get; }
+
+    public ShoppingList(string path, int budget)
     {
         this.path = path;
+        Budget = budget;
     }
 
-    public void Add(Item item)
+    // Adds the item if the total stays within the budget.
+    // Returns false if the item would make the list too expensive.
+    // Compares with what is left of the budget, so a huge price cannot
+    // overflow the sum and slip past the check.
+    public bool Add(Item item)
     {
+        if (item.Price > Budget - Total())
+        {
+            return false;
+        }
+
         items.Add(item);
+        return true;
     }
 
     // Removes the item the user sees as number 1, 2, 3 ...
@@ -97,7 +111,7 @@ class ShoppingList
     {
        if (!File.Exists(path))
         {
-            Console.WriteLine("Hittade ingen sparad lista. d");
+            Console.WriteLine("Hittade ingen sparad lista. Börjar med en tom lista");
             return;
         }    
     
@@ -118,7 +132,14 @@ class ShoppingList
                 continue;
             }
 
-            items.Add(new Item(parts[1], price));
+            try
+            {
+                items.Add(new Item(parts[1], price));
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Hoppar över en ogiltig vara: " + line);
+            }
         }
     }
 }
