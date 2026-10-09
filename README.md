@@ -24,5 +24,12 @@ Det här felet hittade jag genom att läsa koden. Save() hade en tom catch och s
 Jag skrev bokstäver och tomma svar i menyn, priset och numret, tog bort varor som inte fanns, döpte om items.txt, sparade och startade om, sökte efter varor i listan och räknade totalsumman för hand.
 
 ### Budget tak samt småfix. 
-Från början jämförde Add() Total() + pris med Budget. Nu jämför Add() i stället priset med det som är kvar av budgeten, Budget - Total(). Den uträkningen kan inte bli för stor, så kontrollen fungerar även för väldigt höga priser.
-Jag testade genom att lägga till en vara för 2147483647 kr. Den stoppas nu av budgeten. Sedan lade jag till en vara som gjorde totalen precis 500 kr, och den gick igenom.
+Från början jämförde Add() Total() + pris med Budget. Nu jämför Add() i stället priset med det som är kvar av budgeten, Budget - Total(). Den uträkningen kan inte bli för stor, så kontrollen fungerar även för väldigt höga priser. Jag testade genom att lägga till en vara för 2147483647 kr. Den stoppas nu av budgeten. Sedan lade jag till en vara som gjorde totalen precis 500 kr, och den gick igenom.
+
+### Sökningen bryr sig inte om stora/små bokstäver
+Find() tar bort mellanslag runt sökordet med Trim() och jämför
+med StringComparison.OrdinalIgnoreCase. Nu hittas till exempel
+Mjölk även om man söker på tex "mjölk" eller " MJÖLK ".
+
+
+

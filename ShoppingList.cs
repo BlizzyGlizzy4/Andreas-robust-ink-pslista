@@ -56,11 +56,14 @@ class ShoppingList
     }
 
     // Looks up an item by its name. Returns null if there is no such item.
+    // Upper/lower case and spaces around the name do not matter.
     public Item Find(string name)
     {
+        string wanted = name.Trim();
+
         foreach (Item item in items)
         {
-            if (item.Name == name)
+            if (string.Equals(item.Name, wanted, StringComparison.OrdinalIgnoreCase))
             {
                 return item;
             }
