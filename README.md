@@ -34,5 +34,35 @@ Mjölk även om man söker på tex "mjölk" eller " MJÖLK ".
 ### Budgeten sparas i items.txt
 Förut glömdes budgeten bort när programmet avslutades, eftersom den bara fanns i Program.cs. Nu skriver Save() budgeten på första raden i items.txt, som "budget;500", och sedan varorna som förut.
 
+### Designval
+Add returnerar false när en vara inte ryms i budgeten. Jag valde det i stället för ett undantag eftersom en för dyr vara inte är ett fel i programmet utan något som kan hända helt vanligt. Program.cs kollar svaret med en if och skriver ett meddelande om varan inte lades till. Item kastar däremot undantag, eftersom en konstruktor inte kan returnera false och ett Item med tomt namn eller negativt pris inte ska få skapas.
 
+### Klassdiagram
+```
++======================+
+|       Program        |
++======================+
+| Menyn och inmatning  |
++======================+
+           |
+           | använder
+           V
++======================+
+|     ShoppingList     |
++======================+
+| Budget               |
+| Add()   RemoveAt()   |
+| Total() Find()       |
+| Save()  Load()       |
++======================+
+           |
+           | har många
+           V
++======================+
+|         Item         |
++======================+
+| Name                 |
+| Price                |
++======================+
 
+```
