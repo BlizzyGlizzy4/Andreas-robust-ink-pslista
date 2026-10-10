@@ -31,5 +31,8 @@ Find() tar bort mellanslag runt sökordet med Trim() och jämför
 med StringComparison.OrdinalIgnoreCase. Nu hittas till exempel
 Mjölk även om man söker på tex "mjölk" eller " MJÖLK ".
 
+### Budgeten sparas i items.txt
+Förut glömdes budgeten bort när programmet avslutades, eftersom den bara fanns i Program.cs. Nu skriver Save() budgeten på första raden i items.txt, som "budget;500", och sedan varorna som förut.
+
 
 

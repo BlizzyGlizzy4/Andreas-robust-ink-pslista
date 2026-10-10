@@ -5,7 +5,9 @@ class ShoppingList
    private string path;
 
     // The most the whole list may cost, in kronor.
-    public int Budget { get; }
+    // Only Load() may change it, when the file has a saved budget.
+    
+    public int Budget { get; private set; }
 
     public ShoppingList(string path, int budget)
     {
@@ -82,12 +84,15 @@ class ShoppingList
         Console.WriteLine($"Totalt: {Total()} kr");
     }
 
-    // Writes one item per line, as "price;name".
+    // Writes the budget on the first line, as "budget;amount",
+    // and then one item per line, as "price;name".
     public void Save()
     {
         List<string> lines = new List<string>();
+        lines.Add($"budget;{Budget}");
 
         foreach (Item item in items)
+
         {
             lines.Add($"{item.Price};{item.Name}");
         }
@@ -106,7 +111,6 @@ class ShoppingList
             Console.WriteLine("Har inte behörighet att spara listan. " + ex.Message);
         }
 
-        Console.WriteLine("Listan är sparad.");
     }
 
     // Reads the file back into the list.
@@ -128,8 +132,25 @@ class ShoppingList
             }
 
             
-            string[] parts = line.Split(';');
-             if (parts.Length != 2 || !int.TryParse(parts[0], out int price))
+                       string[] parts = line.Split(';');
+
+            // The budget line replaces the budget from the constructor.
+            if (parts[0] == "budget")
+            {
+                if (parts.Length == 2 && int.TryParse(parts[1], out int savedBudget) && savedBudget >= 0)
+                {
+                    Budget = savedBudget;
+                }
+                else
+                {
+                    Console.WriteLine("Budgeten i filen går inte att läsa. Använder " + Budget + " kr.");
+                }
+
+                continue;
+            }
+
+            if (parts.Length != 2 || !int.TryParse(parts[0], out int price))
+
             {
                 Console.WriteLine("Hoppar över en rad som inte går att läsa: " + line);
                 continue;
